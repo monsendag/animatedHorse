@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <title>Animated Horse</title>
+  <link rel="stylesheet" href="http://www.x3dom.org/download/dev/x3dom.css"/>
+  <script type='text/javascript' src="http://www.x3dom.org/download/dev/x3dom.js"></script>
+  <style type='text/css'>
+  </style>
+<script type='text/javascript'>
+window.onload=function(){
+
+}  
+</script>
+</head>
+<body>
+  <X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" width="400px" height="400px">
+    <Scene>
+        <DirectionalLight on='true' ambientIntensity='1' intensity='1' direction="0 -0.5 -1"></DirectionalLight>
+        <Background skyColor='0 0 0.5'></Background>
+        <viewpoint position="0 4 30" direction="0 -1.2 -1"></viewpoint>
+        <Group>
+            <Transform DEF="horse" rotation="0 0 1 1.2">
+                <Group DEF="body">
+                    <Transform scale="3.5 1.2 1">
+                        <Shape>
+                            <Appearance>
+                                <Material DEF="fur" diffuseColor="0.4 0.1 0.2" />
+                            </Appearance>
+                            <Box />
+                        </Shape>
+                    </Transform>
+                </Group>
+                <Group DEF="torso">
+                    <Transform scale="0.5 0.7 1" translation="3 1 0" rotation="0 0 1 0.7">
+                        <Group USE="body" />
+                    </Transform>
+                </Group>
+                <Group DEF="head">
+                    <Transform scale="0.5 0.6 1" translation="4 1.5 0">
+                        <Group USE="body" />
+                    </Transform>
+                </Group>
+                <Group DEF="frontlegs">
+                    <Group DEF="leg">
+                        <Transform translation="0 0 0.8">
+                            <Group DEF="limb">
+                                <Transform scale="0.5 0.5 0.5" translation="3 -1.7 0">
+                                    <Shape>
+                                        <Appearance>
+                                            <Material USE="fur" />
+                                        </Appearance>
+                                        <IndexedFaceSet solid='false' coordIndex='0 2 3 -1 0 3 4 -1 0 4 5 -1 0 5 2 -1 
+                                        1 2 3 -1 1 3 4 -1 1 4 5 -1 1 5 2 -1'>
+                                        <Coordinate point='0 1 0, 0 -1 0, 0.5 0 0.5, -0.5 0 0.5, -0.5 0 -0.5, 0.5 0 -0.5' />
+                                    </IndexedFaceSet>
+                                </Shape>
+                            </Transform>
+                        </Group>
+                        <Transform translation="0 -0.9 0">
+                            <Group USE="limb" />
+                        </Transform>
+                        <Transform scale="0.2 0.4 0.2" translation="3 -3.5 0">
+                            <Shape DEF="hoof">
+                                <Appearance>
+                                    <Material diffuseColor="black" />
+                                </Appearance>
+                                <Box />
+                            </Shape>
+                        </Transform>
+                    </Transform>
+                </Group>
+                <Transform translation="0 0 -1.6">
+                    <Group USE="leg" />
+                </Transform>
+            </Group>
+            <Group DEF="backlegs">
+                <Transform translation="-6 0 0">
+                    <Group USE="frontlegs" />
+                </Transform>
+            </Group>
+            <Group DEF="tail">
+                <Group DEF="tailstart">
+                    <Transform translation="-5.3 -2.2 0" rotation="0 0 1 1.7">
+                        <Group USE="limb" />
+                    </Transform>
+                </Group>
+                <Transform translation="-0.8 1.3 0" rotation="0 0 1 0.4">
+                    <Group USE="tailstart" />
+                </Transform>
+                <Transform translation="-1.9 1.8 0" rotation="0 0 1 0.7">
+                    <Group USE="tailstart" />
+                </Transform>
+            </Group>
+        </Transform>
+    </Group>
+
+    <TimeSensor DEF="AngleTimer" cycleInterval="8" loop="true" />
+    <OrientationInterpolator DEF="AngleInterpolator" key="0 0.75 1" keyValue="0 0 1 0, 0 0 1 3.14, 0 0 1 6.28" />
+    <Route fromNode="AngleTimer" fromField="fraction_changed" toNode="AngleInterpolator" toField="set_fraction" />
+    <Route fromNode="AngleInterpolator" fromField="value_changed" toNode="horse" toField="set_rotation" />
+
+    <Group DEF="fenceside">
+        <Group DEF="fencepost">
+            <Transform scale="0.2 2 0.2" translation="9 -2 -9">
+                <Shape>
+                    <Appearance>
+                        <Material DEF="fencecolor" transparency="0.8" diffuseColor="brown" />
+                    </Appearance>
+                    <Box />
+                </Shape>
+            </Transform>
+        </Group>
+        <Transform translation="-18 0 0">
+            <Group USE="fencepost" />
+        </Transform>
+        <Group DEF="fencebar">
+            <Transform scale="9.2 0.2 0.2" translation="0 0 -9">
+                <Shape>
+                    <Appearance>
+                        <Material USE="fencecolor" />
+                    </Appearance>
+                    <Box />
+                </Shape>
+            </Transform>
+        </Group>
+        <Transform translation="0 -2 0">
+            <Group USE="fencebar" />
+        </Transform>
+    </Group>
+    <Transform translation="0 0 18">
+        <Group USE="fenceside" />
+    </Transform>
+    <Transform translation="0 0 0" rotation="0 1 0 1.57">
+        <Group USE="fenceside" />
+    </Transform>
+    <Transform translation="0 0 0" rotation="0 1 0 -1.57">
+        <Group USE="fenceside" />
+    </Transform>
+    <Transform scale="10 0.01 10" translation="0 -4 0">
+        <Shape>
+            <Appearance>
+                <Material diffuseColor="green" />
+            </Appearance>
+            <Box />
+        </Shape>
+    </Transform>
+</Scene>
+</X3D>
+<img src="http://goanna.cs.rmit.edu.au/~gl/teaching/web3d/ass1/horse5.png" />
+
+</body>
+</html>
