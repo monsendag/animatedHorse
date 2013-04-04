@@ -40,7 +40,8 @@
                         <Group USE="body" />
                     </Transform>
                 </Group>
-                <Group DEF="frontlegs">
+                <Transform DEF="frontlegs">
+                <Group DEF="frontlegsGroup">
                     <Group DEF="leg">
                         <Transform translation="0 0 0.8">
                             <Group DEF="limb">
@@ -56,16 +57,18 @@
                                 </Shape>
                             </Transform>
                         </Group>
-                        <Transform translation="0 -0.9 0">
+                        <Transform DEF="frontrightleg">
+                          <Transform translation="0 -0.9 0">
                             <Group USE="limb" />
-                        </Transform>
-                        <Transform scale="0.2 0.4 0.2" translation="3 -3.5 0">
+                          </Transform>
+                          <Transform scale="0.2 0.4 0.2" translation="3 -3.5 0">
                             <Shape DEF="hoof">
-                                <Appearance>
-                                    <Material diffuseColor="black" />
-                                </Appearance>
-                                <Box />
+                              <Appearance>
+                                 <Material diffuseColor="black" />
+                              </Appearance>
+                              <Box />
                             </Shape>
+                          </Transform>
                         </Transform>
                     </Transform>
                 </Group>
@@ -73,11 +76,12 @@
                     <Group USE="leg" />
                 </Transform>
             </Group>
-            <Group DEF="backlegs">
+            </Transform>
+            <Transform DEF="backlegs">
                 <Transform translation="-6 0 0">
-                    <Group USE="frontlegs" />
+                    <Group USE="frontlegsGroup" />
                 </Transform>
-            </Group>
+            </Transform>
             <Group DEF="tail">
                 <Group DEF="tailstart">
                     <Transform translation="-5.3 -2.2 0" rotation="0 0 1 1.7">
